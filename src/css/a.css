@@ -1,3 +1,7 @@
-.a{
-	background-color: #f00;
+@import './swiper-3.4.2.min.css';
+@import './common.css';
+.a{	
+	width: 100%;
+	min-height:100px;
+	background: url('../img/bg.jpg');
 }

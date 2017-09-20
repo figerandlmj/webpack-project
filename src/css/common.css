@@ -8,3 +8,6 @@ html,body{
 ul,li{
 	list-style: none;
 }
+.flex{
+	display: flex;
+}
