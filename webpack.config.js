@@ -1,15 +1,18 @@
+var path = require('path');
+var glob = require('glob');
 var webpack = require('webpack');
 var htmlWebpackPlugin = require('html-webpack-plugin');
-var path = require('path');
+var cleanPlugin = require('clean-webpack-plugin'); // 文件夹清除工具
+var extractTextPlugin = require('extract-text-webpack-plugin');//将你的行内样式提取到单独的css文件里
 
-module.exports = {
-	entry:{
-		a:'./src/a.js',
-		b:'./src/b.js'
+var webpackConfig = {
+    /* 一些webpack基础配置 */   
+    entry:{
 	},
 	output:{
 		path:path.resolve(__dirname,'dist'),
-		filename:'js/[name].js'
+		publicPath:'http://localhost/webpack-project/dist/',
+		filename:'js/[name]-[chunkhash].js'
 	},
 	module:{
 		rules:[
@@ -29,18 +32,10 @@ module.exports = {
 			{
 				test:/\.css$/,
 				exclude: /node_modules/,
-				use:[
-					'style-loader',
-					{
-						loader:'css-loader',
-						options:{
-							importLoaders:1
-						}
-					},
-					{
-						loader:'postcss-loader'
-					}
-				]
+				use:extractTextPlugin.extract({
+					fallback: "style-loader", // 编译后用什么loader来提取css文件
+          			use: "css-loader?importLoaders=1!postcss-loader" // 指需要什么样的loader去编译文件,这里由于源文件是.css所以选择css-loader
+				})
 			},
 			// {
 			// 	test:/\.less$/,
@@ -50,10 +45,10 @@ module.exports = {
 			// 	test:/\.html$/,
 			// 	loader:'html-loader'
 			// },
-			// {
-			// 	test:/\.tpl$/,
-			// 	loader:'ejs-loader'
-			// },
+			{
+				test:/\.tpl$/,
+				loader:'ejs-loader'
+			},
 			{
 				test:/\.(png|jpg|gif|svg)$/i,
 				loaders:[
@@ -64,25 +59,47 @@ module.exports = {
 		]
 	},
 	plugins:[
-		new htmlWebpackPlugin({
-			filename:'a.html',
-			template:'./src/view/a.html',
-			chunks:['a'],
-			inject:'body',
-			// title:'wabpack is good'
-		}),
-		new htmlWebpackPlugin({
-			filename:'b.html',
-			template:'./src/view/b.html',
-			chunks:['b'],
-			inject:'body',
-			// title:'wabpack is good'
-		}),
 		new webpack.ProvidePlugin({
 	      	$: 'jquery',
 		    jQuery: 'jquery',
 		    'window.jQuery': 'jquery',
 		    'window.$': 'jquery',
-	    })
+	    }),
+	    new cleanPlugin(['dist']),// 清空dist文件夹
+	    new extractTextPlugin( "css/[name]-[hash:5].css"), //提取CSS行内样式,转化为link引入
 	]
+};
+
+var entries = getEntries('src/*.js');
+Object.keys(entries).forEach(function(name) {
+    // 每个页面生成一个entry，如果需要HotUpdate，在这里修改entry
+    webpackConfig.entry[name] = entries[name];
+    
+    // 每个页面生成一个html
+    var plugin = new htmlWebpackPlugin({
+        // 生成出来的html文件名
+        filename: name + '.html',
+        // 每个html的模版，这里多个页面使用同一个模版
+        template: './src/view/'+name+'.html',
+        // 自动将引用插入html
+        inject: 'body',
+        // 每个html引用的js模块，也可以在这里加上vendor等公用模块
+        chunks: [name]
+    });
+    webpackConfig.plugins.push(plugin);
+})
+
+// 获取指定路径下的入口文件
+function getEntries(globPath) {
+    var files = glob.sync(globPath),
+       	entries = {};
+    files.forEach(function(filepath) {
+        // 取倒数第1层(view下面的文件夹)做包名
+        var split = filepath.split('/');
+        var name = split[split.length - 1].replace(".js","");
+        entries[name] = './' + filepath;
+    });
+    return entries;
 }
+
+module.exports = webpackConfig;

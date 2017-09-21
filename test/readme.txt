@@ -17,10 +17,3 @@ cnpm install image-webpack-loader --save-dev //压缩图片文件
 cnpm install jquery --save-dev //安装jquery插件
 cnpm install expose-loader --save-dev //将指定js模块export的变量声明为全局变量
 
-cnpm install ejs-loader --save-dev //处理tpl模板文件,可以用<% %>语法
-
-cnpm install clean-webpack-plugin --save-dev //打包之前删除目录下文件
-
-
-
-

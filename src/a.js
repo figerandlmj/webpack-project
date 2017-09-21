@@ -1,12 +1,36 @@
 require('./css/a.css');
-
 import Common from './lib/common.js';
+import List from './components/list/list.js';
 
-// var $ = require('jquery');
-// swiperCarousel();
-$("#a").html("this is a page");
-// document.getElementById("a").innerHTML="this is a page";
 var common=new Common();
-// common.alertStr("this is a page");
 common.swiperCarousel();
-console.log(common.str);
+
+var list = new List();
+var html=list.tpl({
+	data:[
+		{	
+			name:'apple',
+			con:'this is apple'
+		},
+		{	
+			name:'pear',
+			con:'this is pear'
+		}
+	]
+});
+$("#a").html(html);
+
+var systemtime=common.getSystemTime();
+console.log(systemtime);
+
+window.getToken=function(token){
+	alert(token)
+}
+
+$("#test-jump").on("click",function(){
+	var this_url=common.fixed_url+"newtrain/index.html";
+	alert(this_url);
+	Android.callDetail(this_url,"");
+})
+
+
