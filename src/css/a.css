@@ -1,5 +1,5 @@
 @import './swiper-3.4.2.min.css';
-@import './common.css';
+@import './common.less';
 .a{	
 	width: 100%;
 	min-height:100px;

@@ -37,10 +37,10 @@ var webpackConfig = {
           			use: "css-loader?importLoaders=1!postcss-loader" // 指需要什么样的loader去编译文件,这里由于源文件是.css所以选择css-loader
 				})
 			},
-			// {
-			// 	test:/\.less$/,
-			// 	loader:'style-loader!css-loader!postcss-loader!less-loader'
-			// },
+			{
+				test:/\.less$/,
+				loader:'style-loader!css-loader!postcss-loader!less-loader'
+			},
 			// {
 			// 	test:/\.html$/,
 			// 	loader:'html-loader'

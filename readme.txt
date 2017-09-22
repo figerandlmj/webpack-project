@@ -10,6 +10,9 @@ cnpm install css-loader style-loader --save-dev //处理文件中引入的css文
 cnpm install postcss-loader --save-dev //css后处理
 cnpm install autoprefixer --save-dev //给css加前缀
 
+cnpm install less --save-dev //处理less文件
+cnpm install less-loader --save-dev //处理less文件
+
 cnpm install file-loader --save-dev //处理图片文件
 cnpm install url-loader --save-dev //处理图片文件,可以指定limit参数，将图片转换为base64编码
 cnpm install image-webpack-loader --save-dev //压缩图片文件
