@@ -1,4 +1,4 @@
-require('./css/a.css');
+require('./style/a.css');
 import Common from './lib/common.js';
 import List from './components/list/list.js';
 

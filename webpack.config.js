@@ -11,7 +11,7 @@ var webpackConfig = {
 	},
 	output:{
 		path:path.resolve(__dirname,'dist'),
-		publicPath:'http://localhost/webpack-project/dist/',
+		publicPath:'http://192.168.2.182/webpack-project/dist/',
 		filename:'js/[name]-[chunkhash].js'
 	},
 	module:{
@@ -34,12 +34,16 @@ var webpackConfig = {
 				exclude: /node_modules/,
 				use:extractTextPlugin.extract({
 					fallback: "style-loader", // 编译后用什么loader来提取css文件
-          			use: "css-loader?importLoaders=1!postcss-loader" // 指需要什么样的loader去编译文件,这里由于源文件是.css所以选择css-loader
+          			use: "css-loader?importLoaders=1!postcss-loader!less-loader" // 指需要什么样的loader去编译文件,这里由于源文件是.css所以选择css-loader
 				})
 			},
 			{
 				test:/\.less$/,
-				loader:'style-loader!css-loader!postcss-loader!less-loader'
+				exclude: /node_modules/,
+				use:extractTextPlugin.extract({
+					fallback: "style-loader", // 编译后用什么loader来提取css文件
+          			use: "css-loader?importLoaders=1!postcss-loader!less-loader" // 指需要什么样的loader去编译文件,这里由于源文件是.css所以选择css-loader
+				})
 			},
 			// {
 			// 	test:/\.html$/,
