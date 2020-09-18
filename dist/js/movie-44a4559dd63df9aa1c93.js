@@ -107,10 +107,10 @@ module.exports = g;
 "use strict";
 /* WEBPACK VAR INJECTION */(function($) {Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 // 线上地址
-// var fixed_url="https://www.uutianfu.com/";   
+// var fixed_url="https://www.baidu.com/";   
    
 // 测试地址
-var fixed_url="https://www.5ialways.cn/";
+var fixed_url="https://www.baidu.cn/";
 
 // 项目访问地址
 var project_url="film-fhjy/";
