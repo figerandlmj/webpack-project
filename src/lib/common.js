@@ -1,8 +1,8 @@
 // 线上地址
-// var fixed_url="https://www.uutianfu.com/";   
+// var fixed_url="https://www.baidu.com/";   
    
 // 测试地址
-var fixed_url="https://www.5ialways.cn/";
+var fixed_url="https://www.baidu.cn/";
 
 // 项目访问地址
 var project_url="film-fhjy/";
